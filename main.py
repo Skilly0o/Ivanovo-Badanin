@@ -6,7 +6,6 @@ from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
-
 class FlagMaker(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -27,7 +26,7 @@ class FlagMaker(QMainWindow):
 
     def draw(self, qp):
         qp.setBrush(QColor(255, 225, 0))
-        qp.drawEllipse(int(random.random(0, 300)))
+        qp.drawEllipse(int(random.random(0, 300)), random.random(0, 300), random.random(0, 300))
 
 
 if __name__ == '__main__':
