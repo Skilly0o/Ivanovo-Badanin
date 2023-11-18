@@ -2,7 +2,6 @@ import random
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -19,7 +18,9 @@ class FlagMaker(QMainWindow):
         x = random.randint(0, self.width() - diameter)
         y = random.randint(0, self.height() - diameter)
 
-        self.circles.append((x, y, diameter))
+        color = QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+        self.circles.append((x, y, diameter, color))
         self.update()
 
     def paintEvent(self, event):
@@ -27,8 +28,8 @@ class FlagMaker(QMainWindow):
         painter.setRenderHint(QPainter.Antialiasing)
 
         for circle in self.circles:
-            x, y, diameter = circle
-            painter.setBrush(QColor(Qt.yellow))
+            x, y, diameter, color = circle
+            painter.setBrush(color)
             painter.drawEllipse(x, y, diameter, diameter)
 
 
