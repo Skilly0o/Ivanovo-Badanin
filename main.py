@@ -1,7 +1,8 @@
-import sys
 import random
+import sys
 
 from PyQt5 import uic
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -10,23 +11,25 @@ class FlagMaker(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('UI.ui', self)
-        self.button.clicked.connect(self.paint)
+        self.circles = []
+        self.button.clicked.connect(self.addCircle)
 
-    def paintEvent(self, event):
-        if self.do_paint:
-            qp = QPainter()
-            qp.begin(self)
-            self.draw(qp)
-            qp.end()
-        self.do_paint = False
+    def addCircle(self):
+        diameter = random.randint(20, 100)
+        x = random.randint(0, self.width() - diameter)
+        y = random.randint(0, self.height() - diameter)
 
-    def paint(self):
-        self.do_paint = True
+        self.circles.append((x, y, diameter))
         self.update()
 
-    def draw(self, qp):
-        qp.setBrush(QColor(255, 225, 0))
-        qp.drawEllipse(int(random.random(0, 300)), random.random(0, 300), random.random(0, 300))
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        for circle in self.circles:
+            x, y, diameter = circle
+            painter.setBrush(QColor(Qt.yellow))
+            painter.drawEllipse(x, y, diameter, diameter)
 
 
 if __name__ == '__main__':
